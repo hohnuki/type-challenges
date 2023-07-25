@@ -134,3 +134,7 @@ type spaceXLength = Length<spaceX> // expected 5
 type tesla = ['tesla', 'model 3', 'model x', 'model y'];
 type teslaLength = tesla['length']; // 4
 ```
+この方法で得られる長さは静的なものだから、動的なものには対応できないみたい。<br>
+⇒ 動的なものはJavaScriptで対応する。`tesla.length` とか。
+
+---
