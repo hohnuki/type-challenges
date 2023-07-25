@@ -99,3 +99,38 @@ interface Todo {
 
 type Title = Todo["string"] // string
 ```
+
+---
+**3.タプル型の長さを返すLength< T >を作ろう**
+
+問題<br>
+タプルTを受け取り、そのタプルの長さを返す型Length<T>を実装してください。
+```TS
+// タプル型の長さを返すLength<T>を実装してください。
+
+type tesla = ['tesla', 'model 3', 'model X', 'model Y']
+type spaceX = ['FALCON 9', 'FALCON HEAVY', 'DRAGON', 'STARSHIP', 'HUMAN SPACEFLIGHT']
+
+type teslaLength = Length<tesla>  // expected 4
+type spaceXLength = Length<spaceX> // expected 5
+
+```
+回答
+```TS
+// タプル型の長さを返すLength<T>を実装してください。
+type Length<T extends any[]> = T["length"];
+
+type tesla = ['tesla', 'model 3', 'model X', 'model Y']
+type spaceX = ['FALCON 9', 'FALCON HEAVY', 'DRAGON', 'STARSHIP', 'HUMAN SPACEFLIGHT']
+
+type teslaLength = Length<tesla>  // expected 4
+type spaceXLength = Length<spaceX> // expected 5
+```
+
+メモ<br>
+タプル型（配列型）から要素の長さを取得するには、`T['length']` というインデックスを使用する。使用例は以下。<br>
+※このインデックスを使用できるように、`T` を `T extends any[]` と宣言して配列を受けるようにしてる。
+```TS
+type tesla = ['tesla', 'model 3', 'model x', 'model y'];
+type teslaLength = tesla['length']; // 4
+```
