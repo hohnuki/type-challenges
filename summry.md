@@ -138,3 +138,53 @@ type teslaLength = tesla['length']; // 4
 ⇒ 動的なものはJavaScriptで対応する。`tesla.length` とか。
 
 ---
+**4.タプル型からオブジェクトを生成する型を作ろう**
+
+問題<br>
+タプルを受け取り、その各値のkey/valueを持つオブジェクトの型に変換する型を実装してください。
+```TS
+// Tuple型からObject型を生成するTupleToObjectを実装してください。
+const tuple = ['tesla', 'model 3', 'model X', 'model Y'] as const
+
+type result = TupleToObject<typeof tuple> // expected { tesla: 'tesla', 'model 3': 'model 3', 'model X': 'model X', 'model Y': 'model Y'}
+
+```
+回答<br>
+```TS
+// Tuple型からObject型を生成するTupleToObjectを実装してください。
+type TupleToObject<T extends readonly any[]> = {
+  [K in T[number]]: K
+}
+
+const tuple = ['tesla', 'model 3', 'model X', 'model Y'] as const
+
+type result = TupleToObject<typeof tuple> // expected { 'tesla': 'tesla', 'model 3': 'model 3', 'model X': 'model X', 'model Y': 'model Y'}
+```
+メモ<br>
+Mapped Typesを数字の型に利用してオブジェクト型を生成している。また、as constの配列を型パラメータとして受け取れるようにreadonly修飾子を利用している。<br>
+- Mapped Types
+```TS
+type tuple = ['tesla', 'model 3', 'model X', 'model Y'] as const;
+
+type Cars = typeof tuple[number]; // 'tesla' | 'model 3' | 'model X' | 'model Y'
+```
+- typeof<br>
+既存の変数やオブジェクトから新しい型を作り出すために使用される。コンパイル時に変数やオブジェクトの型を参照する。使用例は以下。
+```TS
+let person = { name: "Alice", age: 25 };
+
+// 'typeof person' は { name: string, age: number }型を指す。
+let anotherPerson: typeof person;
+
+anotherPerson = { name: "Bob", age: 20 }; //OK
+anotherPerson = { name: "Charlie" }; //Error!!
+```
+- 索引型（Indexed type）
+型が配列またはタプル型のときに、配列の各要素の型を取得する。
+```TS
+type ArrayType = string[];
+type ElementType = ArrayType[number]; // stringになる
+
+type Tuple = [string, number];
+type ElementType = Tuple[number]; // string | numberになる
+```
