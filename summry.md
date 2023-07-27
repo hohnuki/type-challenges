@@ -188,3 +188,35 @@ type ElementType = ArrayType[number]; // stringになる
 type Tuple = [string, number];
 type ElementType = Tuple[number]; // string | numberになる
 ```
+
+---
+**5.タプル型に要素を追加するPush型を実装する**
+
+問題<br>
+Array.pushのジェネリックバージョンを実装してください。
+```TS
+// Push型を定義してください
+// 例えば、Push<[1, 2], '3'>は[1, 2, '3']を返します
+
+type Result = Push<[1, 2], '3'> // [1, 2, '3']
+
+type Push<T> = 
+```
+回答<br>
+```TS
+// Push型を定義してください
+// 例えば、Push<[1, 2], '3'>は[1, 2, '3']を返します
+
+type Result = Push<[1, 2], '3'> // [1, 2, '3']
+
+type Push<T extends any[], U> = [...T, U];
+```
+メモ<br>
+スプレッド演算子の利用と`T extends any[]`で配列しか受け取れないように制約をかけるのがポイント。
+- スプレッド演算子
+スプレッド演算子`...`は配列やオブジェクトの中身を展開する演算子。
+```TS
+type Foo = [1, 2, 3];
+
+type Bar = [...Foo, 4]; // [1, 2, 3, 4]
+```
