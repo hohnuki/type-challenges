@@ -220,3 +220,22 @@ type Foo = [1, 2, 3];
 
 type Bar = [...Foo, 4]; // [1, 2, 3, 4]
 ```
+---
+**6.タプル型の先頭に要素を追加する型を作ろう**
+
+問題<br>
+Array.unshiftの型バージョンを実装してください。
+```TS
+// Unshiftを実装してください
+
+type Result = Unshift<[1, 2], 0> // [0, 1, 2,]
+```
+回答<br>
+```TS
+// Unshiftを実装してください
+type Unshift<T extends any[], U> = [U, ...T];
+
+type Result = Unshift<[1, 2], 0> // [0, 1, 2,]
+```
+---
+**7.オブジェクト型の一部を選択する型を作ろう**
