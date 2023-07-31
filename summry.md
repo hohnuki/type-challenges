@@ -239,3 +239,46 @@ type Result = Unshift<[1, 2], 0> // [0, 1, 2,]
 ```
 ---
 **7.オブジェクト型の一部を選択する型を作ろう**
+
+問題<br>
+組み込みの型ユーティリティPick<T, K>を使用せず、TからKのプロパティを抽出する型を実装してください。
+```TS
+interface Todo {
+  title: string
+  description: string
+  completed: boolean
+}
+
+/* _____________ ここにコードを記入 _____________ */
+
+type MyPick<T, K> = any
+  
+type TodoPreview = MyPick<Todo, 'title' | 'completed'>
+
+const todo: TodoPreview = {
+  title: 'Clean room',
+  completed: false,
+}
+```
+回答
+```TS
+interface Todo {
+  title: string
+  description: string
+  completed: boolean
+}
+
+/* _____________ ここにコードを記入 _____________ */
+
+type MyPick<T, K extends string | number | symbol> = {
+  [k in K]: k extends keyof T ? T[k] : never;
+}
+  
+type TodoPreview = MyPick<Todo, 'title' | 'completed'>
+
+const todo: TodoPreview = {
+  title: 'Clean room',
+  completed: false,
+}
+
+```
