@@ -282,3 +282,25 @@ const todo: TodoPreview = {
 }
 
 ```
+メモ<br>
+むずかしい。明日もここでいいかも。
+- Conditional Types<br>
+三項演算子かな。
+```TS
+type Foo<T> = T extends string ? string : number;
+
+type FooString = Foo<string>; // string
+type FooNumber = Foo<boolean>; // number
+```
+- never型<br>
+この型を使用すると型をないものとして扱える。
+```TS
+type Exclude<T, U> = T extends U ? never : T;
+
+type Foo = Exclude<string | number | boolean, boolean>; //string | number
+```
+- symbol型<br>
+ちょっとよくわかんない。
+
+---
+**8.**
