@@ -283,7 +283,8 @@ const todo: TodoPreview = {
 
 ```
 メモ<br>
-むずかしい。明日もここでいいかも。
+Mapped TypesでKの型を1個ずつ参照し、参照したプロパティに三項演算子を用いて型付けしている。`k extends keyof T`みたいな感じでTのプロパティを継承しているか確認するのがミソ。
+~~むずかしい。明日もここでいいかも。~~
 - Conditional Types<br>
 三項演算子かな。
 ```TS
@@ -300,7 +301,14 @@ type Exclude<T, U> = T extends U ? never : T;
 type Foo = Exclude<string | number | boolean, boolean>; //string | number
 ```
 - symbol型<br>
-ちょっとよくわかんない。
+~~ちょっとよくわかんない。~~ ⇚ プロパティキーは通常 stirng | number | symbol のいずれかでなかればならないから。回答のextendsしてる。
+```TS
+const person = {
+	name: 'Alice', // "name"はプロパティキー string
+	age: 30,       // "age"はプロパティキー number
+	[Symbol('id')]: 1234 // "Symbol('id')はプロパティキー Symbol
+}
+```
 
 ---
 **8.**
