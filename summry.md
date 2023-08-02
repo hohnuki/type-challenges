@@ -311,4 +311,23 @@ const person = {
 ```
 
 ---
-**8.**
+**8.条件分岐する型を作ろう**
+
+問題<br>
+条件値C、 Cが truthy である場合の戻り値の型T、Cが falsy である場合の戻り値の型Fを受け取るIfを実装します。
+```TS
+// type Ifを実装してください。
+type A = If<true, 'a', 'b'>; // expected to be 'a'
+type B = If<false, 'a', 'b'>; // expected to be 'b'
+```
+回答
+```TS
+// type Ifを実装してください。
+type A = If<true, 'a', 'b'>; // expected to be 'a'
+type B = If<false, 'a', 'b'>; // expected to be 'b'
+
+type If<C extends boolean, T, F> = C extends true ? T : F;
+// type If<T extends boolean, U extends string, K extends string> = T extends true ? U : K;
+```
+メモ<br>
+Conditional Types（三項演算子？）と用いる。
