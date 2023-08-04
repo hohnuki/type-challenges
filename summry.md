@@ -331,3 +331,33 @@ type If<C extends boolean, T, F> = C extends true ? T : F;
 ```
 メモ<br>
 Conditional Types（三項演算子？）と用いる。
+
+---
+**9.Promise型の中身を取り出す型を作ろう**
+
+問題<br>
+Promise likeな型が内包する型を実装してください。例えば：Promise< ExampleType >という型がある場合、どのようにして ExampleType を取得すればよいでしょうか。
+```TS
+type MyAwaited = any
+type ExampleType = Promise<string>
+
+type Result = MyAwaited<ExampleType> // string
+```
+回答
+```TS
+type MyAwaited<T> = T extends Promise<infer U> ? U : never;
+type ExampleType = Promise<string>;
+
+type Result = MyAwaited<ExampleType>; // string
+```
+メモ<br>
+inferキーワードを用いて、Promise型の引数を型推論して型を作成する。
+- infer<br>
+inferキーワードはジェネリック型の中で型推論する際に使用できる。例は以下。
+```TS
+type ArrayItem<T> = T extends (infer R)[] : R ? never;
+type Foo = ArrayItem<string[]>; // string
+```
+
+---
+**10.配列同士を結合する型を作ろう**
