@@ -361,3 +361,22 @@ type Foo = ArrayItem<string[]>; // string
 
 ---
 **10.配列同士を結合する型を作ろう**
+
+問題<br>
+JavaScriptのArray.concat関数のような型を実装して下さい。
+```TS
+type Concat = any;
+type Result = Concat<[1], [2]>; // expected to be [1, 2]
+```
+
+回答
+```TS
+type Concat<T extends any[], U extends eny[]> = [...T, ...U];
+type Result = Concat<[1], [2]>; // expected to be [1, 2]
+```
+
+メモ<br>
+スプリット演算子を使用して配列やオブジェクトの中身を展開するのがポイント。
+
+---
+**11.配列の最初の要素を返す型を作ろう**
