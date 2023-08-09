@@ -221,7 +221,7 @@ type Foo = [1, 2, 3];
 type Bar = [...Foo, 4]; // [1, 2, 3, 4]
 ```
 ---
-**6.タプル型の先頭に要素を追加する型を作ろう**
+**6.Unshift:タプル型の先頭に要素を追加する型を作ろう**
 
 問題<br>
 Array.unshiftの型バージョンを実装してください。
@@ -238,7 +238,7 @@ type Unshift<T extends any[], U> = [U, ...T];
 type Result = Unshift<[1, 2], 0> // [0, 1, 2,]
 ```
 ---
-**7.オブジェクト型の一部を選択する型を作ろう**
+**7.Pick:オブジェクト型の一部を選択する型を作ろう**
 
 問題<br>
 組み込みの型ユーティリティPick<T, K>を使用せず、TからKのプロパティを抽出する型を実装してください。
@@ -311,7 +311,7 @@ const person = {
 ```
 
 ---
-**8.条件分岐する型を作ろう**
+**8.If:条件分岐する型を作ろう**
 
 問題<br>
 条件値C、 Cが truthy である場合の戻り値の型T、Cが falsy である場合の戻り値の型Fを受け取るIfを実装します。
@@ -333,7 +333,7 @@ type If<C extends boolean, T, F> = C extends true ? T : F;
 Conditional Types（三項演算子？）と用いる。
 
 ---
-**9.Promise型の中身を取り出す型を作ろう**
+**9.Awaited:Promise型の中身を取り出す型を作ろう**
 
 問題<br>
 Promise likeな型が内包する型を実装してください。例えば：Promise< ExampleType >という型がある場合、どのようにして ExampleType を取得すればよいでしょうか。
@@ -360,7 +360,7 @@ type Foo = ArrayItem<string[]>; // string
 ```
 
 ---
-**10.配列同士を結合する型を作ろう**
+**10.Concat:配列同士を結合する型を作ろう**
 
 問題<br>
 JavaScriptのArray.concat関数のような型を実装して下さい。
@@ -379,4 +379,33 @@ type Result = Concat<[1], [2]>; // expected to be [1, 2]
 スプリット演算子を使用して配列やオブジェクトの中身を展開するのがポイント。
 
 ---
-**11.配列の最初の要素を返す型を作ろう**
+**11.First:配列の最初の要素を返す型を作ろう**
+
+問題<br>
+配列Tを受け取り、その最初のプロパティの型を返すFirst<T>を実装してください。
+```TS
+// Firstを実装してください
+type First = any;
+type arr1 = ['a', 'b', 'c']
+type arr2 = [3, 2, 1]
+
+type head1 = First<arr1> // expected to be 'a'
+type head2 = First<arr2> // expected to be 3
+```
+
+回答
+```TS
+// Firstを実装してください
+type First<T extends any[]> = T extends [infer U, ...any[]] ? U : never;
+type arr1 = ['a', 'b', 'c']
+type arr2 = [3, 2, 1]
+
+type head1 = First<arr1> // expected to be 'a'
+type head2 = First<arr2> // expected to be 3
+```
+
+メモ<br>
+型を推論できる`infer`キーワードとスプレッド演算子`...`を有効活用する。inferむずいな...
+
+---
+**12.Include:配列に要素が含まれればtrueを返す型を作ろう**
