@@ -409,3 +409,30 @@ type head2 = First<arr2> // expected to be 3
 
 ---
 **12.Include:配列に要素が含まれればtrueを返す型を作ろう**
+
+問題<br>
+JavaScriptの`Array.include`関数を型システムに実装してください。
+```TS
+// Includesを実装してください
+type isPillarMen = Includes<['Kars', 'Esidisi', 'Wamuu', 'Santana'], 'Dio'>; // expected to be `false`
+```
+
+回答
+```TS
+// Includesを実装してください
+type isPillarMen = Includes<['Kars', 'Esidisi', 'Wamuu', 'Santana'], 'Dio'> // expected to be `false`
+
+type Includes<T extends any[], U> = U extends T[number] ? true : false;
+```
+
+メモ<br>
+Conditional Typesとインデックスアクセス型を利用すること。
+- インデックスアクセス型（復習）<br>
+インデックスアクセス型はオブジェクトのプロパティにアクセスするための機能。インデックスに`number`を指定すると配列の要素の型をUnion型として取得することができる。
+```TS
+type Cars = ["Toyota", "Honda", "Nissan"];
+type Car = Cars[number]; // "Toyota" | "Honda" | "Nissan";
+```
+
+---
+**13.関数の引数の型を取得するMyParametersを作ろう**
